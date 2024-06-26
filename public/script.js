@@ -1,78 +1,100 @@
-const GITHUB_USERNAME = 'olveirancc';
-        const JSON_SERVER_URL = 'http://localhost:3000';
-        async function fetchGitHubProfile() {
-            const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
-            const data = await response.json();
-            document.getElementById('avatar').src = data.avatar_url;
-            document.getElementById('name').innerText = data.name;
-            document.getElementById('bio').innerText = data.bio;
-            document.getElementById('email').href = `mailto:${data.email}`;
-            document.getElementById('email').innerText = 'Email';
-            // Preencher LinkedIn com seu link
-            document.getElementById('linkedin').href = 'https://www.linkedin.com/in/seu-linkedin/';
-        }
+const nome = document.querySelector('#nome')
+const perfil = document.querySelector('#perfil')
+const localizacao = document.querySelector('#localizacao')
+const seguidores = document.querySelector('#seguidores')
+const bio = document.querySelector('#bio')
+const repositorios = document.querySelector('#repositorios')
+const colegas = document.querySelector('#colegas')
+const videos = document.querySelector('#videos')
+const nick = document.querySelector('#nick')
 
-        // Função para buscar repositórios do GitHub
-        async function fetchGitHubRepos() {
-            const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos`);
-            const data = await response.json();
-            const reposList = document.getElementById('repos-list');
-            data.forEach(repo => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <div class="card-body">
-                        <h5 class="card-title">${repo.name}</h5>
-                        <p class="card-text">${repo.description}</p>
-                        <a href="${repo.html_url}" class="btn btn-primary">Ver Repositório</a>
-                    </div>
-                `;
-                reposList.appendChild(card);
-            });
-        }
 
-        // Função para buscar conteúdo sugerido do JSONServer
-        async function fetchSuggestedContent() {
-            const response = await fetch(`${JSON_SERVER_URL}/suggestedContent`);
-            const data = await response.json();
-            const contentSuggestions = document.getElementById('content-suggestions');
-            data.forEach((content, index) => {
-                const item = document.createElement('div');
-                item.className = `carousel-item ${index === 0 ? 'active' : ''}`;
-                item.innerHTML = `
-                    <img src="${content.image}" class="d-block w-100" alt="${content.title}">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>${content.title}</h5>
-                        <p>${content.description}</p>
-                    </div>
-                `;
-                contentSuggestions.appendChild(item);
-            });
-        }
+function getConteudos() {
+    fetch('https://api.github.com/users/olveirancc')
+        .then(res => {
+            return res.json()
+        })
+        .then((data) => {
+            nick.textContent = data.login
+            nome.textContent = data.name
+            perfil.setAttribute("src", data.avatar_url)
+            bio.textContent = data.bio
+            followers.innerHTML += data.followers
+            localizacao.innerHTML += data.localizacao
+        })
+}
 
-        // Função para buscar colegas de trabalho do JSONServer
-        async function fetchColleagues() {
-            const response = await fetch(`${JSON_SERVER_URL}/colleagues`);
-            const data = await response.json();
-            const colleaguesList = document.getElementById('colleagues-list');
-            data.forEach(colleague => {
-                const col = document.createElement('div');
-                col.className = 'col-md-4';
-                col.innerHTML = `
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">${colleague.name}</h5>
-                            <p class="card-text">${colleague.description}</p>
-                        </div>
-                    </div>
-                `;
-                colleaguesList.appendChild(col);
-            });
-        }
+function getRepos() {
+    fetch('https://api.github.com/users/olveirancc/repos')
+        .then(res => {
+            return res.json()
+        })
+        .then((data) => {
+            console.log(data);
+            data.forEach((repo) => {
+                repositorios.innerHTML += `
+    <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">${repo.name}</h5>
+            <a target="_blank" href="/DIW-main%20(2)/ana_yuki_1524619.zip/DIW-main/secao1.html?name=${repo.name}">
+              <p class="card-text ">${repo.description}</p>
+            </a>
+          </div>
+        </div>
+      </div>
+`
+            })
+        })
+}
 
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchGitHubProfile();
-            fetchGitHubRepos();
-            fetchSuggestedContent();
-            fetchColleagues();
-        });
+function getRecomendacoes() {
+    fetch('http://localhost:3000/videos_recommendations')
+        .then(res => {
+            return res.json()
+        })
+        .then((data) => {
+            console.log(data);
+            data.forEach((video, index) => {
+                videos.innerHTML += `
+         <div class="slide slide_${index + 1}">
+                  <div class="slide-content">
+                    <iframe width="560" height="315" src="${video.video}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                  </div>
+               </div>
+`
+            })
+        })
+
+}
+
+
+
+function getColegas() {
+    fetch('http://localhost:3000/colegas')
+        .then(res => {
+            return res.json()
+        })
+        .then((data) => {
+            console.log(data);
+            data.forEach(colega => {
+                colegas.innerHTML += `
+   <div class="col-sm-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">${colega.name}</h5>
+              <img src="${colega.image}" id="pente" alt="">
+            </div>
+          </div>
+        </div>
+    `
+
+            })
+
+        })
+}
+
+getConteudos()
+getColegas()
+getRecomendacoes()
+getRepos()
