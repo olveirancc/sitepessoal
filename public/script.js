@@ -10,6 +10,7 @@ const nick = document.querySelector('#nick')
 const compania = document.querySelector('#compania')
 
 
+
 function getConteudos() {
     fetch('https://api.github.com/users/olveirancc')
         .then(res => {
@@ -21,7 +22,7 @@ function getConteudos() {
             compania.textContent = data.company
             perfil.setAttribute("src", data.avatar_url)
             bio.textContent = data.bio
-            followers.innerHTML += data.followers
+            followers.textContent = data.followers
             local.textContent = data.location
         })
 }
@@ -41,9 +42,11 @@ function getRepos() {
                                     <h5 class="card-title">${repo.name}</h5> 
                                 </a>
                                 <br>
-                                <p class="card-text">${repo.description}</p>
+                                <p class="card-text">Descrição: ${repo.description}</p>
                                 <p class="card-text">Principal linguagem: ${repo.language}</p>
-                                <p class="card-text">${repo.visibility}</p>
+                                <p class="card-text">Criado em: ${repo.created_at}</p>
+                                <p class="card-text">Atualizado em: ${repo.updated_at}</p>
+                                <p class="card-text">Visibilidade: ${repo.visibility}</p>
                             </div>
                         </div>
                     </div>
