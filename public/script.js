@@ -1,12 +1,13 @@
 const nome = document.querySelector('#nome')
 const perfil = document.querySelector('#perfil')
-const localizacao = document.querySelector('#localizacao')
+const local = document.querySelector('#local')
 const seguidores = document.querySelector('#seguidores')
 const bio = document.querySelector('#bio')
 const repositorios = document.querySelector('#repositorios')
 const colegas = document.querySelector('#colegas')
 const videos = document.querySelector('#videos')
 const nick = document.querySelector('#nick')
+const compania = document.querySelector('#compania')
 
 
 function getConteudos() {
@@ -17,35 +18,38 @@ function getConteudos() {
         .then((data) => {
             nick.textContent = data.login
             nome.textContent = data.name
+            compania.textContent = data.company
             perfil.setAttribute("src", data.avatar_url)
             bio.textContent = data.bio
             followers.innerHTML += data.followers
-            localizacao.innerHTML += data.localizacao
+            local.textContent = data.location
         })
 }
 
 function getRepos() {
     fetch('https://api.github.com/users/olveirancc/repos')
-        .then(res => {
-            return res.json()
-        })
+        .then(res => res.json())
         .then((data) => {
             console.log(data);
+            const repositorios = document.getElementById('repositorios');
             data.forEach((repo) => {
                 repositorios.innerHTML += `
-    <div class="col">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">${repo.name}</h5>
-            <a target="_blank" href="/DIW-main%20(2)/ana_yuki_1524619.zip/DIW-main/secao1.html?name=${repo.name}">
-              <p class="card-text ">${repo.description}</p>
-            </a>
-          </div>
-        </div>
-      </div>
-`
-            })
-        })
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <a target="_blank" href="https://github.com/olveirancc/${repo.name}">
+                                    <h5 class="card-title">${repo.name}</h5> 
+                                </a>
+                                <br>
+                                <p class="card-text">${repo.description}</p>
+                                <p class="card-text">Principal linguagem: ${repo.language}</p>
+                                <p class="card-text">${repo.visibility}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        });
 }
 
 function getRecomendacoes() {
