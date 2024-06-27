@@ -56,21 +56,28 @@ function getRepos() {
 }
 
 function getRecomendacoes() {
-    fetch('http://localhost:3000/videos_recommendations')
+    fetch('http://localhost:3000/recomendacoes')
         .then(res => {
             return res.json()
         })
         .then((data) => {
             console.log(data);
-            data.forEach((video, index) => {
-                videos.innerHTML += `
-         <div class="slide slide_${index + 1}">
-                  <div class="slide-content">
-                    <iframe width="560" height="315" src="${video.video}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                  </div>
-               </div>
-`
-            })
+            const recomendacoes = document.getElementById('recomendacoes');
+            recomendacoes.innerHTML += `
+   <div class="slider-wrapper">
+            <div class="slider">
+                <img id="slide-1" src="${reco.img1}">
+                <img id="slide-2" src="${reco.img2}">
+                <img id="slide-3" src="${reco.img3}">
+            </div>
+            <div class="slider-nav">
+                <a href="#slide-1"></a>
+                <a href="#slide-2"></a>
+                <a href="#slide-3"></a>
+            </div>
+        </div>
+    `
+
         })
 
 }
@@ -84,13 +91,15 @@ function getColegas() {
         })
         .then((data) => {
             console.log(data);
+            const colegas = document.getElementById('colegas');
             data.forEach(colega => {
                 colegas.innerHTML += `
-   <div class="col-sm-4">
+   <div class="col">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">${colega.name}</h5>
-              <img src="${colega.image}" id="pente" alt="">
+              <h2 class="card-title">${colega.nome}</h2>
+              <h4 class="card-title"><a href="https://github.com/${colega.git}">${colega.git}</a></h4>
+              <img src="${colega.foto}" id="pente" alt="">
             </div>
           </div>
         </div>
@@ -100,6 +109,7 @@ function getColegas() {
 
         })
 }
+
 
 getConteudos()
 getColegas()

@@ -1,1 +1,30 @@
-{}
+{
+    "colegas":[
+        {
+        "nome": "Mateus Fasciane",
+        "foto": "https://avatars.githubusercontent.com/u/157423475?v=4",
+        "git": "MateusViggiani"
+        },
+        {
+        "nome": "Davi Wenzel",
+        "foto": "https://avatars.githubusercontent.com/u/166032534?v=4",
+        "git": "DaviWenzel"
+        },
+        {
+        "nome": "Felipe",
+        "foto": "https://avatars.githubusercontent.com/u/170647604?v=4",
+        "git": "Lipefsk05"
+        }
+    ],
+    "recomendacoes":[
+        {
+        "img1": "https://revistacult.uol.com.br/home/wp-content/uploads/2017/06/stalker.jpg"
+        },
+        {
+        "img2": "https://a.ltrbxd.com/resized/sm/upload/1l/yt/8t/ip/the%20fifth%20seal-1200-1200-675-675-crop-000000.jpg?v=3665c9cdff"
+        },
+        {
+        "img3": "https://resizing.flixster.com/Keox2u5yyBqeXLWm7NQS9KPCWN0=/1100x618/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p7726_i_h10_ag.jpg"
+        }
+    ]
+}
