@@ -47,6 +47,8 @@ function getRepos() {
                                 <p class="card-text">Criado em: ${repo.created_at}</p>
                                 <p class="card-text">Atualizado em: ${repo.updated_at}</p>
                                 <p class="card-text">Visibilidade: ${repo.visibility}</p>
+                                <p class="card-text">Fork: ${repo.fork}</p>
+                                <p class="card-text">Estrelas: ${repo.stargazers_count}</p>
                             </div>
                         </div>
                     </div>
